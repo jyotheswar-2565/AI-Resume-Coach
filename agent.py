@@ -28,16 +28,13 @@ genai.configure(api_key=api_key)
 
 model = genai.GenerativeModel("gemini-2.5-flash")
 
-
 def analyze_resume(resume_text):
-
     prompt = f"""
     You are an expert Resume Reviewer.
 
     Analyze the following resume.
 
     Provide:
-
     1. Resume Score out of 100
     2. Strengths
     3. Weaknesses
@@ -45,12 +42,40 @@ def analyze_resume(resume_text):
     5. Improvement Suggestions
 
     Resume:
-
     {resume_text}
     """
 
-    response = model.generate_content(
-        prompt
-    )
+    response = model.generate_content(prompt)
 
-    return response.text
+    if hasattr(response, "text") and response.text:
+        return response.text
+
+    return str(response)
+
+
+# def analyze_resume(resume_text):
+
+#     prompt = f"""
+#     You are an expert Resume Reviewer.
+
+#     Analyze the following resume.
+
+#     Provide:
+
+#     1. Resume Score out of 100
+#     2. Strengths
+#     3. Weaknesses
+#     4. Missing Skills
+#     5. Improvement Suggestions
+
+#     Resume:
+
+#     {resume_text}
+#     """
+
+#     response = model.generate_content(
+#         prompt
+#     )
+
+#     return response.text
+
